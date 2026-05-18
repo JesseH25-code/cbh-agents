@@ -128,105 +128,42 @@ Report sent ✅ with message ID, or error ❌ with details. Never report success
 ## AGENT: Nathan (Nurture)
 **Schedule:** M-F 9:30 AM ET
 **Pipeline:** VOwswOU0LlkxQw5OfGpP
-**Purpose:** Advance leads through the nurture sequence (Day0 → Day3 → Day7 → Day14 → Day30 → Monthly)
+**Purpose:** Send nurture emails (Day0 → Day3 → Day7 → Day14 → Day30 → Monthly), advance stage, tag sent contacts. Max 15/run.
 
-Write and run a Node.js script to /tmp/nathan.mjs:
+Run this Node.js script exactly as written using Bash. Write it to /tmp/nathan.mjs and run: node /tmp/nathan.mjs
 
 ```javascript
-const G='pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3';
-const L='dmJ46ZDGVnMqpqJUs4ok';
-const R='re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp';
-const NP='VOwswOU0LlkxQw5OfGpP';
-const D0='7bcb6394-fe1e-45c8-b31c-07635a2120a5';
-const D3='8b88f1be-3677-419d-b12f-d82b1e0e5694';
-const D7='66474940-c25c-4dc3-ba78-e2d8f67f49fc';
-const D14='5ebaf39f-a1e6-4bc8-9a1b-f96f0ce699ad';
-const D30='081aec18-9868-459c-b2ee-28d44f3c1fd5';
-const MO='0acd3675-78ed-490c-9719-ef6439935d6a';
-
-const SKIP_TAGS = ['prior-conversation','active-listing','buyer-agreement','DNC','do-not-contact','Jesse-Vetted'];
-
-async function api(path, opts={}) {
-  const r = await fetch('https://services.leadconnectorhq.com' + path, {
-    headers: { Authorization: 'Bearer ' + G, Version: '2021-07-28', 'Content-Type': 'application/json' },
-    ...opts
-  });
-  return r.json();
-}
-
-async function getOpps() {
-  let all = [], pg = 1;
-  while (true) {
-    const d = await api('/opportunities/search?pipeline_id=' + NP + '&location_id=' + L + '&limit=100&page=' + pg);
-    const o = d.opportunities || [];
-    all = all.concat(o);
-    if (o.length < 100) break;
-    pg++;
-  }
-  return all;
-}
-
-const STAGE_SEQ = [D0, D3, D7, D14, D30, MO];
-const STAGE_DAYS = { [D0]: 0, [D3]: 3, [D7]: 7, [D14]: 14, [D30]: 30, [MO]: 30 };
-const STAGE_NAMES = { [D0]: 'Day0', [D3]: 'Day3', [D7]: 'Day7', [D14]: 'Day14', [D30]: 'Day30', [MO]: 'Monthly' };
-const TAG_SENT = { [D0]: 'Nathan-Day0-Sent', [D3]: 'Nathan-Day3-Sent', [D7]: 'Nathan-Day7-Sent', [D14]: 'Nathan-Day14-Sent', [D30]: 'Nathan-Day30-Sent', [MO]: 'Nathan-Monthly-Sent' };
-
-async function main() {
-  const opps = await getOpps();
-  const now = Date.now();
-  let sent = 0, skipped = 0, rows = '';
-
-  for (const o of opps) {
-    const c = o.contact || {};
-    const tags = (c.tags || []).map(t => typeof t === 'string' ? t.toLowerCase() : (t.name || '').toLowerCase());
-    if (SKIP_TAGS.some(s => tags.includes(s.toLowerCase()))) { skipped++; continue; }
-    if (!c.email) { skipped++; continue; }
-
-    const stageId = o.pipelineStageId;
-    const stageName = STAGE_NAMES[stageId] || 'Unknown';
-    const sentTag = TAG_SENT[stageId];
-    if (!sentTag || tags.includes(sentTag.toLowerCase())) { skipped++; continue; }
-
-    const lastChanged = new Date(o.lastStageChangeAt || o.dateAdded).getTime();
-    const daysInStage = (now - lastChanged) / (1000 * 60 * 60 * 24);
-    const daysRequired = STAGE_DAYS[stageId] || 0;
-    if (daysInStage < daysRequired) { skipped++; continue; }
-
-    const fn = c.firstName || (c.name || '').split(' ')[0] || 'there';
-    const co = (o.name.split(' — ')[1] || o.name).trim();
-
-    // Email copy for this stage
-    const COPY = {
-      [D0]: { sub: `Quick question about ${co}`, body: `Hi ${fn},\n\nI work with business owners helping them understand what their business is worth and what a transition could look like.\n\nI came across ${co} and wanted to reach out — no sales pitch, just a 15-minute call to see if there's anything useful I can share.\n\nWorth a conversation?\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845` },
-      [D3]: { sub: `Following up — ${co}`, body: `Hi ${fn},\n\nJust following up on my note from earlier this week. We help business owners in Florida get clarity on valuation and connect with pre-qualified buyers when the timing is right.\n\nHappy to put together a quick overview of what a transition could look like for ${co} — no commitment.\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845` },
-      [D7]: { sub: `One more thought — ${co}`, body: `Hi ${fn},\n\nI know you're busy. I'll keep this short — if you've ever thought about what ${co} might be worth, I can give you a real number without any obligation.\n\nJust reply and we'll set something up.\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845` },
-      [D14]: { sub: `Checking back in — ${co}`, body: `Hi ${fn},\n\nI wanted to check back in. We've worked with several Florida business owners this year who weren't sure if the timing was right — in most cases, a conversation early was far more valuable than waiting.\n\nWould a quick call work this week?\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845` },
-      [D30]: { sub: `Still here if you need us — ${co}`, body: `Hi ${fn},\n\nJust wanted to leave the door open. When the time is right for ${co}, we'd be glad to help.\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845` },
-      [MO]: { sub: `Quarterly check-in — ${co}`, body: `Hi ${fn},\n\nHoping things are going well. Just a quick check-in — if anything has changed with ${co} or you'd like to revisit a conversation, I'm here.\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845` },
-    };
-
-    const msg = COPY[stageId];
-    if (!msg) { skipped++; continue; }
-
-    rows += `<tr><td>${o.name}</td><td>${c.email}</td><td>${stageName}</td><td>${msg.sub}</td></tr>`;
-
-    // Tag as sent
-    await api('/contacts/' + c.id + '/tags', { method: 'POST', body: JSON.stringify({ tags: [TAG_SENT[stageId]] }) }).catch(() => {});
-    sent++;
-  }
-
-  const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-  const html = `<h2>[Nathan] ${sent} emails queued — ${today}</h2><p>${skipped} skipped (already sent, no email, or skip tag).</p><table border="1" cellpadding="6" style="border-collapse:collapse"><tr><th>Opp</th><th>Email</th><th>Stage</th><th>Subject</th></tr>${rows}</table>`;
-
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + R, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: 'jesse@cbhadvisory.com', to: ['jesse@cbhadvisory.com'], subject: `[Nathan] ${sent} emails queued — ${today}`, html })
-  });
-  console.log(`Done — ${sent} sent, ${skipped} skipped`);
-}
-
-main().catch(e => { console.error('FAIL:', e.message); process.exit(1); });
+const G='pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3',L='dmJ46ZDGVnMqpqJUs4ok',R='re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp',NP='VOwswOU0LlkxQw5OfGpP';
+const D0='7bcb6394-fe1e-45c8-b31c-07635a2120a5',D3='8b88f1be-3677-419d-b12f-d82b1e0e5694',D7='66474940-c25c-4dc3-ba78-e2d8f67f49fc',D14='5ebaf39f-a1e6-4bc8-9a1b-f96f0ce699ad',D30='081aec18-9868-459c-b2ee-28d44f3c1fd5',DM='0acd3675-78ed-490c-9719-ef6439935d6a';
+const SKIP=['prior-conversation','do-not-contact','dnc','active-listing','broker-mediated','elijah-drafted','daniel-drafted','jesse-vetted'];
+const MAX=15,SIG='<br><br>Best,<br>Jesse Hastings<br>CBH Business Group<br>(407) 908-3845<br>CBHbusinessgroup.com';
+const h={Authorization:'Bearer '+G,Version:'2021-07-28','Content-Type':'application/json'};
+async function api(p,o={}){return(await fetch('https://services.leadconnectorhq.com'+p,{headers:h,...o})).json();}
+async function send(to,sub,html){return(await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:'Bearer '+R,'Content-Type':'application/json'},body:JSON.stringify({from:'Jesse Hastings <jesse@cbhadvisory.com>',to:[to],subject:sub,html})})).json();}
+const EM={
+day0:(fn,co)=>({sub:'Quick question about '+co,html:'<p>Hi '+fn+',</p><p>I came across '+co+' and wanted to reach out. I work with business owners in home services and trades helping them understand what their business is worth — whether thinking about an exit now or down the road.</p><p>Not a sales pitch — just a 15-minute call to see if there is anything useful I can share. Would you be open to connecting?</p>'+SIG}),
+day3:(fn,co)=>({sub:co+' — following up',html:'<p>Hi '+fn+',</p><p>Just following up on my note from earlier this week. We have helped owners in your space get a clear picture of their valuation and what a transition could look like.</p><p>Happy to put together a quick business overview at no cost — no strings attached. Worth a conversation?</p>'+SIG}),
+day7:(fn,co)=>({sub:'Last note — '+co,html:'<p>Hi '+fn+',</p><p>I will keep this short — I have reached out a couple times and do not want to be a bother. If the timing is not right, totally understand.</p><p>If you ever want to explore what '+co+' could be worth on the market, I am here whenever it makes sense.</p>'+SIG}),
+day14:(fn,co)=>({sub:'Checking back in — '+co,html:'<p>Hi '+fn+',</p><p>Checking back in after a couple weeks. The M&A market for businesses in your space remains active — strong buyer interest in established operations with solid revenue.</p><p>Happy to pull together a quick valuation estimate for '+co+' at no cost. No commitment needed.</p>'+SIG}),
+day30:(fn,co)=>({sub:co+' — still interested if timing works',html:'<p>Hi '+fn+',</p><p>Brief check-in. If you have been thinking more seriously about an exit or just want to know your options, I would love to connect. We work with buyers actively looking in your industry.</p>'+SIG}),
+monthly:(fn,co)=>({sub:'Staying in touch — '+co,html:'<p>Hi '+fn+',</p><p>Hope things are going well with '+co+'. Just staying on your radar — whenever you are ready to explore your options I am here to help.</p>'+SIG})};
+const STEPS=[{s:D0,tag:'nathan-day0-sent',next:D3,k:'day0'},{s:D3,tag:'nathan-day3-sent',next:D7,k:'day3'},{s:D7,tag:'nathan-day7-sent',next:D14,k:'day7'},{s:D14,tag:'nathan-day14-sent',next:D30,k:'day14'},{s:D30,tag:'nathan-day30-sent',next:DM,k:'day30'},{s:DM,tag:'nathan-monthly-sent',next:null,k:'monthly'}];
+async function main(){
+let all=[],pg=1;
+while(1){const d=await api('/opportunities/search?pipeline_id='+NP+'&location_id='+L+'&limit=100&page='+pg);const o=d.opportunities||[];all=all.concat(o);if(o.length<100)break;pg++;}
+let sent=0,rows='';
+for(const st of STEPS){if(sent>=MAX)break;
+const el=all.filter(o=>{if(o.pipelineStageId!==st.s)return false;const c=o.contact||{};if(!c.email)return false;const t=(c.tags||[]).map(x=>(typeof x==='string'?x:x.name).toLowerCase());return!t.includes(st.tag)&&!SKIP.some(s=>t.includes(s));});
+for(const o of el){if(sent>=MAX)break;const c=o.contact||{};const fn=(c.name||'').split(' ')[0]||'there';const co=c.companyName||o.name;const{sub,html}=EM[st.k](fn,co);
+const r=await send(c.email,sub,html);
+if(r.id){await send('jesse@cbhadvisory.com','[SENT] '+sub,html);await api('/contacts/'+c.id+'/tags',{method:'POST',body:JSON.stringify({tags:[st.tag]})});if(st.next)await api('/opportunities/'+o.id,{method:'PUT',body:JSON.stringify({pipelineStageId:st.next})});rows+='<li>'+st.k.toUpperCase()+' → '+c.name+' ('+co+')</li>';sent++;console.log('✅',st.k,c.name);}
+await new Promise(r=>setTimeout(r,300));}}
+const today=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+const sh='<h2>[Nathan] '+sent+' emails sent — '+today+'</h2><ul>'+rows+'</ul>';
+await send('jesse@cbhadvisory.com','[Nathan] '+sent+' nurture emails sent — '+today,sh);
+await send('jesse@cbhadvisory.com','[SENT] [Nathan] '+sent+' nurture emails sent — '+today,sh);
+console.log('Done',sent);}
+main().catch(e=>{console.error(e.message);process.exit(1);});
 ```
 
 ---
