@@ -330,7 +330,7 @@ Send digest to jesse@cbhadvisory.com via Resend. Subject: `[Elijah] Inbox Digest
 **Schedule:** Daily 7:15 AM ET
 **Purpose:** Broader morning briefing covering HHV, Simplispect, and CBH portfolio-wide
 
-*(Prompt to be added — pull from CCR routine)*
+⚠️ *Prompt to be added — copy from CCR routine "Jarvis Morning Briefing"*
 
 ---
 
@@ -338,7 +338,7 @@ Send digest to jesse@cbhadvisory.com via Resend. Subject: `[Elijah] Inbox Digest
 **Schedule:** M-F 7:15 AM ET
 **Purpose:** Generate and queue new outbound leads for the day
 
-*(Prompt to be added — pull from CCR routine)*
+⚠️ *Prompt to be added — copy from CCR routine "Daily Lead Generator"*
 
 ---
 
@@ -347,32 +347,140 @@ Send digest to jesse@cbhadvisory.com via Resend. Subject: `[Elijah] Inbox Digest
 ### CBH Daily Blog Post
 **Schedule:** Daily 9:00 AM ET
 **Site:** cbhadvisory.com
-*(Prompt to be added — pull from CCR routine)*
+
+⚠️ *Prompt to be added — copy from CCR routine "CBH Daily Blog Post"*
 
 ### HHV Daily Blog Post
 **Schedule:** Daily 9:00 AM ET
 **Site:** hastingshomeventures.com
-*(Prompt to be added — pull from CCR routine)*
+
+⚠️ *Prompt to be added — copy from CCR routine "HHV Daily Blog Post"*
 
 ### Classic Garage Doors Daily Blog
 **Schedule:** Daily 10:00 AM ET
-*(Prompt to be added — pull from CCR routine)*
+
+⚠️ *Prompt to be added — copy from CCR routine "Classic Garage Doors Daily Blog"*
 
 ---
 
 ## SEO AGENTS
 
-### CBH Weekly SEO Audit
+### CBH Weekly SEO & Growth Audit
 **Schedule:** Mondays 8:00 AM ET
-*(Prompt to be added — pull from CCR routine)*
+**Repo:** https://github.com/JesseH25-code/cbh-nextjs.git
+**Local path:** /Users/jessehastings/Claude Code/cbh-nextjs
+
+You are an automated SEO auditor and fixer for CBH Business Group (cbhbusinessgroup.com), a Florida business brokerage.
+
+**Step 1 — Pull latest main**
+```bash
+cd "/Users/jessehastings/Claude Code/cbh-nextjs" && git checkout main && git pull origin main
+```
+
+**Step 2 — Audit metadata on key pages**
+Read page.tsx in each app directory and check for a metadata export or generateMetadata function:
+- app/page.tsx (homepage)
+- app/sell-business-orlando/page.tsx
+- app/sell-business-tampa/page.tsx
+- app/sell-business-miami/page.tsx
+- app/business-valuation/page.tsx
+- app/businesses-for-sale-florida/page.tsx
+- app/buy-a-business-in-florida/page.tsx
+
+Check each for: title (50-65 chars), description (130-155 chars), openGraph block. Record pages missing metadata or outside range.
+
+**Step 3 — Audit image alts**
+Read app/page.tsx, app/sell-business-florida/page.tsx, app/business-valuation/page.tsx. Note any `<img` or `<Image>` missing alt attribute.
+
+**Step 4 — Identify top 3 underperforming city/industry pages**
+Read all app/sell-business-*/page.tsx and app/sell-*-florida/page.tsx files. Count JSX text word count. Pick 3 with least content.
+
+**Step 5 — Create feature branch (only if fixes needed)**
+```bash
+cd "/Users/jessehastings/Claude Code/cbh-nextjs" && git checkout -b seo/auto-fix-$(date +%Y-%m-%d)
+```
+
+**Step 6 — Apply fixes**
+Metadata: Add after imports if missing:
+```typescript
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "{SEO title, 50-65 chars}",
+  description: "{140-155 char description with keyword + Florida + CTA hint}",
+  openGraph: {
+    title: "{same as title}",
+    description: "{same as description}",
+    url: "https://www.cbhbusinessgroup.com/{path}",
+    type: "website",
+  },
+};
+```
+Image alts: Add descriptive alt text. Do NOT rewrite page content or restructure components.
+
+**Step 7 — Build check**
+```bash
+cd "/Users/jessehastings/Claude Code/cbh-nextjs" && npm run build 2>&1
+```
+If build fails: revert, delete branch, skip to Step 9.
+
+**Step 8 — Commit, push, PR, merge**
+```bash
+cd "/Users/jessehastings/Claude Code/cbh-nextjs"
+git add app/
+git commit -m "SEO auto-fix $(date +%Y-%m-%d): metadata exports + image alts"
+git push origin HEAD
+gh pr create --title "SEO auto-fix $(date +%Y-%m-%d)" --body "Auto-generated SEO fixes" --base main --repo JesseH25-code/cbh-nextjs
+gh pr merge --squash --repo JesseH25-code/cbh-nextjs --yes
+git checkout main && git pull origin main
+```
+
+**Step 9 — Queue content topics**
+Read /Users/jessehastings/Claude Code/youtube-automation/content_queue.json. Add entries for the 3 underperforming pages if not already present. Write updated array back.
+
+**Step 10 — Report**
+Output: pages fixed, image alts fixed, PR URL or skipped, 3 content topics queued.
+
+---
 
 ### HHV Weekly SEO Audit
 **Schedule:** Mondays 8:00 AM ET
-*(Prompt to be added — pull from CCR routine)*
+**Site:** hastingshomeventures.com
+**WordPress credentials:** Username: Jesse Hastings | App password: b5LI Wb63 oSfV iVfH EkhQ IKSM
+**Report recipient:** info@hastingshomeventures.com
+
+**Pages to audit:**
+- https://hastingshomeventures.com/ (ID 16)
+- https://hastingshomeventures.com/short-term-rental-management-the-villages-fl/ (ID 1341)
+- https://hastingshomeventures.com/airbnb-management-the-villages-fl/ (ID 1342)
+- https://hastingshomeventures.com/snowbird-rental-management-the-villages-fl/ (ID 1343)
+- https://hastingshomeventures.com/property-management-spanish-springs-lake-sumter-the-villages/ (ID 1344)
+- https://hastingshomeventures.com/investing-the-villages-fl-short-term-rental-income/ (ID 1345)
+- https://hastingshomeventures.com/about/ (ID 18)
+- https://hastingshomeventures.com/contact/ (ID 22)
+
+**Checks:** Title (keyword-rich, <60 chars), meta description (140-160 chars), H1 count (exactly 1), page loads (HTTP 200).
+
+Also: check blog posts via `GET /wp-json/wp/v2/posts?per_page=20&_fields=id,title,slug,status`, check homepage broken links, verify sitemap at `/sitemap_index.xml`, check redirects still return 200.
+
+**Report format:**
+```
+HHV Weekly SEO Audit — [Date]
+
+✅ What's Working
+⚠️ Issues Found (page name + what's wrong)
+📈 Trends & Observations
+🔧 Recommended Actions This Week (max 5)
+📋 Page Status Summary (table: Page | Title OK | Meta OK | H1 OK | Loads)
+```
+
+**Send:** Use Gmail MCP (`create_draft`) to draft report email to info@hastingshomeventures.com, subject: `HHV Weekly SEO Audit — [Date]`.
+
+---
 
 ### Classic Garage Doors Weekly SEO
 **Schedule:** Mondays 9:00 AM ET
-*(Prompt to be added — pull from CCR routine)*
+
+⚠️ *Prompt to be added — copy from CCR routine "Classic Garage Doors Weekly SEO"*
 
 ---
 
