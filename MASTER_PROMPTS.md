@@ -134,7 +134,7 @@ Run this Node.js script exactly as written using Bash. Write it to /tmp/nathan.m
 const G='pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3',L='dmJ46ZDGVnMqpqJUs4ok',R='re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp',NP='VOwswOU0LlkxQw5OfGpP';
 const D0='7bcb6394-fe1e-45c8-b31c-07635a2120a5',D3='8b88f1be-3677-419d-b12f-d82b1e0e5694',D7='66474940-c25c-4dc3-ba78-e2d8f67f49fc',D14='5ebaf39f-a1e6-4bc8-9a1b-f96f0ce699ad',D30='081aec18-9868-459c-b2ee-28d44f3c1fd5',DM='0acd3675-78ed-490c-9719-ef6439935d6a';
 const SKIP=['prior-conversation','do-not-contact','dnc','active-listing','broker-mediated','elijah-drafted','daniel-drafted','jesse-vetted'];
-const MAX=15,SIG='<br><br>Best,<br>Jesse Hastings<br>CBH Business Group<br>(407) 908-3845<br>CBHbusinessgroup.com';
+const MAX=15,SIG='<br><br>Best,<br>Jesse Hastings<br>CBH Business Group<br>(407) 908-3845<br>CBHbusinessgroup.com<br><br>Dealmaker Award<br>Top 50 Brokers in Florida — 2024 &amp; 2025<br>Million Dollar Producer in Florida — 2024 &amp; 2025<br>#1 Top Dollar Producer in Central Florida — 2025';
 const h={Authorization:'Bearer '+G,Version:'2021-07-28','Content-Type':'application/json'};
 async function api(p,o={}){return(await fetch('https://services.leadconnectorhq.com'+p,{headers:h,...o})).json();}
 async function send(to,sub,html){return(await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:'Bearer '+R,'Content-Type':'application/json'},body:JSON.stringify({from:'Jesse Hastings <jesse@cbhadvisory.com>',to:[to],subject:sub,html})})).json();}
@@ -249,7 +249,7 @@ async function main(){
     const c=o.contact||{};
     const fn=c.firstName||((c.name||'').split(' ')[0])||'there';
     const co=(o.name.split(' — ')[1]||o.name).trim();
-    const body='Hi '+fn+',\n\nI work with business owners in Florida helping them understand what their business is worth and what a transition could look like.\n\nI came across '+co+' and wanted to reach out — we help owners get clarity on valuation and connect with pre-qualified buyers when the time is right.\n\nNo sales pitch. Just a 15-minute call to see if there is anything useful I can share. Worth a quick conversation?\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845';
+    const body='Hi '+fn+',\n\nI work with business owners in Florida helping them understand what their business is worth and what a transition could look like.\n\nI came across '+co+' and wanted to reach out — we help owners get clarity on valuation and connect with pre-qualified buyers when the time is right.\n\nNo sales pitch. Just a 15-minute call to see if there is anything useful I can share. Worth a quick conversation?\n\nJesse Hastings\nCBH Business Group\n(407) 908-3845\nCBHbusinessgroup.com\n\nDealmaker Award\nTop 50 Brokers in Florida — 2024 & 2025\nMillion Dollar Producer in Florida — 2024 & 2025\n#1 Top Dollar Producer in Central Florida — 2025';
     rows+='<div style="border:1px solid #ddd;padding:15px;margin:12px 0;border-radius:6px;"><h3>'+o.name+'</h3><p style="color:#666;font-size:13px;">'+c.email+'</p><p><strong>Subject:</strong> Quick question about '+co+'</p><pre style="background:#f8f9fa;padding:10px;border-radius:4px;white-space:pre-wrap;font-size:12px;">'+body+'</pre></div>';
   }
   const html='<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:750px;margin:auto;padding:20px;"><h2>[Elijah] '+eligible.length+' Hot Lead Drafts Ready — '+today+'</h2>'+rows+'</body></html>';
@@ -379,7 +379,7 @@ TO: jesse@cbhadvisory.com
 
 **STEP 2:** For each Jesse-Vetted lead, determine matching referral partners based on revenue and industry.
 
-**STEP 3:** Draft blind teaser intro email FROM Jesse TO each matched referral partner. Subject: `Deal Alert | [Industry] Business | [State] | $[Revenue Range]` — NO company name or owner name in subject or body. Sign as Jesse Hastings CBH Business Group 407-908-3845.
+**STEP 3:** Draft blind teaser intro email FROM Jesse TO each matched referral partner. Subject: `Deal Alert | [Industry] Business | [State] | $[Revenue Range]` — NO company name or owner name in subject or body. Sign as Jesse Hastings | CBH Business Group | (407) 908-3845 | CBHbusinessgroup.com | Dealmaker Award | Top 50 Brokers in Florida 2024 & 2025 | Million Dollar Producer in Florida 2024 & 2025 | #1 Top Dollar Producer in Central Florida 2025.
 
 **STEP 4:** Send ONE summary email to Jesse via Resend from daniel@cbhadvisory.com subject: `Daniel Buyer Matches Ready [DATE]`. Note at top: "These drafts are for Jesse-Vetted sellers only. Do not send without final Jesse approval."
 
