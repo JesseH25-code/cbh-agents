@@ -44,8 +44,8 @@ DEAL_CLOSED=68fe0dea-b617-4d05-a55d-c7ff649e409a
 
 ## ACTIVE LISTINGS (update here when deals change)
 - **Jeff Lane** — Closing
-- **Randy Squires** — LOI expired May 13, follow up
-- **Rick Reid (Handcrafted Iron Doors)** — NDA signed May 13, set up meeting with Mike from Nordick
+- **Randy Squires** — Waiting on another buyer to provide written terms, likely going with them
+- **Rick Reid (Handcrafted Iron Doors)** — Waiting to hear back on meeting with Mike from Nordick
 - **Rob Dupree (A Helping Hand)** — LOI stage, $28M est. valuation
 - **Ann (Dorco Enterprises)** — LOI stage, re-engaging Sundial buyers
 - **Coramia Deal** — Active, time sensitive. Parties: Heather Bell (Vesta Capital), Edgaras (Raynexus), Kenz (Wholesalez)
@@ -55,10 +55,8 @@ DEAL_CLOSED=68fe0dea-b617-4d05-a55d-c7ff649e409a
 ## REMINDERS (update here when items are completed or added)
 - Call Roy Alcalay — Turf Girl (561) 849-3151
 - Set up consulting LLC
-- Call Rick Reid
-- Set up meeting between Rick Reid and Mike from Nordick
-- Randy Squires follow-up (LOI expired May 13)
-- Ask Mike from Nordick for buy-side agreement
+- Await written terms from Randy Squires' other buyer
+- Await Mike from Nordick response — referral agreement sent, meeting with Rick Reid pending
 
 ---
 
