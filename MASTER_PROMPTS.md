@@ -144,7 +144,53 @@ day3:(fn,co)=>({sub:'Re: Wanted to Connect',html:'<p>Hey '+fn+',</p><p>Just foll
 day7:(fn,co)=>({sub:'The #1 Thing That Kills Valuations',html:'<p>Hey '+fn+',</p><p>Quick tip—the single biggest valuation killer we see across every industry is owner dependency.</p><p>If a buyer looks at your business and sees that everything runs through you, they immediately start discounting. It signals risk. On the flip side, if you\'ve got documented processes, a strong team, and the business clearly runs without you in the day-to-day—that\'s when buyers start competing for it.</p><p>Worth thinking about regardless of where you are in your journey.</p><p>— Jesse</p>'}),
 day14:(fn,co)=>({sub:'What Separates a Premium Exit From an Average One',html:'<p>Hey '+fn+',</p><p>One thing we see consistently: the businesses that sell at a premium have clean, clear financials. EBITDA that\'s easy to verify. Revenue that\'s predictable and documented.</p><p>Buyers don\'t just buy your business—they buy their confidence in your numbers. If that\'s not dialed in, they discount. If it is, they bid against each other.</p><p>If you\'re ever unsure where you stand, we\'re happy to take a quick look. No cost, no commitment.</p><p>— Jesse</p>'}),
 day30:(fn,co)=>({sub:'What Buyers Actually Pay Top Dollar For',html:'<p>Hey '+fn+',</p><p>After working with 4,000+ buyers, here\'s what we know: strategic buyers pay premiums for things that stick past the acquisition—recurring revenue, proprietary processes, strong team culture, loyal customer base, low customer concentration.</p><p>If you\'ve got those things, the right buyer will fight for your business. If you\'ve got gaps, we can usually help close them before going to market.</p><p>Either way, just wanted to share what we\'re seeing out there.</p><p>— Jesse</p>'}),
-monthly:(fn,co)=>({sub:'Staying in touch — '+co,html:'<p>Hey '+fn+',</p><p>Hope things are going well with '+co+'. Just staying on your radar — whenever you\'re ready to explore your options I\'m here to help.</p><p>— Jesse</p>'})};
+monthly:(fn,co,tags)=>{
+// Industry-aware success story swap for monthly emails
+// Tags → which monthly story fits best
+const t=tags||[];
+const ind=(x)=>t.some(g=>g.includes(x));
+// Monthly rotation uses tags nathan-month2-sent through nathan-month12-sent
+// Pick lowest month number not yet sent
+const months=[
+{tag:'nathan-month2-sent',sub:'One Lever Most Owners Overlook',html:'<p>Hey '+fn+',</p><p>Most business owners focus on revenue when thinking about valuation. Buyers focus on EBITDA margin.</p><p>A business doing $5M in revenue at 20% EBITDA is worth more than one doing $8M at 8%. Cleaning up expenses, eliminating owner perks run through the business, and normalizing add-backs can move your multiple significantly—sometimes overnight.</p><p>We had a plumbing company come to us last year—$6.2M in revenue but their EBITDA looked terrible on paper because the owner was running personal expenses through the business. We spent 45 days normalizing the financials, recast the EBITDA properly, and repositioned the deal. Ended up closing at 4.1x normalized EBITDA. Owner walked away with $800K more than he expected going in.</p><p>If you\'ve never had an EBITDA normalization done, it\'s worth it.</p><p>— Jesse</p>'},
+{tag:'nathan-month3-sent',sub:'Same Business, Better Positioning',html:'<p>Hey '+fn+',</p><p>Had a client in the pest control space—solid business, great routes, loyal customers. Owner thought he\'d get maybe 3x EBITDA. We came in, cleaned up the financials, documented the route structure, and positioned it as a platform acquisition for a regional rollup buyer.</p><p>Closed at 5.8x EBITDA. Same business, different positioning.</p><p>The difference wasn\'t the business—it was knowing which buyers to put it in front of and how to tell the story. That\'s what we spend every day doing.</p><p>— Jesse</p>'},
+{tag:'nathan-month4-sent',sub:'Customer Concentration—Are You Exposed?',html:'<p>Hey '+fn+',</p><p>One thing that quietly kills deals: customer concentration. If more than 20% of your revenue comes from one client, buyers get nervous and price that risk in.</p><p>Had an insurance agency client—great book of business, strong retention, but 35% of revenue came from one commercial account. First buyer we talked to immediately discounted the offer by $400K over that one issue. We paused the process, helped the owner diversify that revenue over about eight months, then relaunched. Final close came in $600K higher than that first offer. One issue fixed, completely different outcome.</p><p>Worth auditing now if you haven\'t.</p><p>— Jesse</p>'},
+{tag:'nathan-month5-sent',sub:'Recurring Revenue Changes Everything',html:'<p>Hey '+fn+',</p><p>If you have any kind of recurring or contracted revenue—maintenance agreements, service contracts, subscriptions—make sure it\'s documented and presented clearly.</p><p>We worked with a pool service company a while back. About 40% of their revenue was recurring maintenance contracts but they\'d never highlighted it as a selling point—it was just buried in the P&L. We repackaged the entire offering around that recurring base, built out a simple contract summary document, and went to market with it front and center. Buyer came in at a full turn higher on the multiple than comparable deals we\'d seen in that market.</p><p>If you\'re not already packaging it that way, start now.</p><p>— Jesse</p>'},
+{tag:'nathan-month6-sent',sub:'Success Story—Roofing Company, $2M to $4.5M in 14 Months',html:'<p>Hey '+fn+',</p><p>Had a roofing contractor come to us a couple years back. Great operator, strong crew, but no real systems documented and financials were a mess.</p><p>We spent about 60 days cleaning things up—documented processes, normalized EBITDA, identified a handful of strategic buyers in our network who were actively rolling up roofing companies in that region.</p><p>Went to market and closed at $4.5M. Owner had been quoted $2M by another firm six months earlier.</p><p>Different positioning, right buyer, right timing. That\'s the whole game.</p><p>— Jesse</p>'},
+{tag:'nathan-month7-sent',sub:'The Difference Between a Financial Buyer and a Strategic Buyer',html:'<p>Hey '+fn+',</p><p>Quick education piece—there are two types of buyers: financial and strategic.</p><p>Financial buyers (PE firms, search funds) buy on multiples and want clean EBITDA. Strategic buyers (competitors, rollups, adjacent businesses) buy on synergy and will often pay above market because your business fills a gap in theirs.</p><p>We had a surveying company recently—solid financials, nothing extraordinary. A financial buyer was circling at 3.2x. We held off, went deeper into our network, and found a regional engineering firm that needed their geographic footprint and licensed crew to expand into a new market. They came in at 5.1x. Same business, completely different buyer motivation.</p><p>Knowing which type of buyer is right for your business changes everything about how you position it.</p><p>— Jesse</p>'},
+{tag:'nathan-month8-sent',sub:'Timing the Market—When\'s the Right Time to Sell?',html:'<p>Hey '+fn+',</p><p>We get this question constantly. The honest answer: the best time to sell is when your business is performing well and you\'re not desperate.</p><p>Had an HVAC owner come to us when his business was declining—revenue down two years in a row, he was burned out, just wanted out. We still got the deal done but left real money on the table because buyers could see the trend. Contrast that with a healthcare staffing client who came to us two years before she wanted to exit. We spent that time cleaning up ops, building out her management team, and growing recurring contracts. When we went to market she had a growth story and we had three buyers competing. Closed 40% above what she originally thought the business was worth.</p><p>Start thinking about your exit 2-3 years before you want to execute. That\'s when we do our best work.</p><p>— Jesse</p>'},
+{tag:'nathan-month9-sent',sub:'Success Story—Pool Construction Company',html:'<p>Hey '+fn+',</p><p>Pool construction client came to us after getting a lowball offer from a competitor looking to acquire them. Owner was frustrated, ready to just take it.</p><p>We ran a proper process—went to our buyer network, found three qualified buyers, created competitive tension. Final offer came in at 2.4x the original offer. Same business, same numbers, just exposed to the right buyers.</p><p>That\'s the difference a network makes. One buyer gives you their number. Four buyers competing gives you yours.</p><p>— Jesse</p>'},
+{tag:'nathan-month10-sent',sub:'What Due Diligence Actually Looks Like',html:'<p>Hey '+fn+',</p><p>A lot of owners don\'t realize how invasive due diligence can be. Buyers will pull 3-5 years of financials, tax returns, contracts, employee agreements, customer lists, vendor relationships—everything.</p><p>Had an athletic apparel client who was weeks from closing when due diligence surfaced an unresolved vendor dispute from three years prior. Buyer almost walked. We spent two weeks helping the owner document the resolution, get a signed release, and reframe the narrative. Deal closed but it was close. The businesses that close cleanly are the ones that are prepared before they go to market. We now help every client build a virtual data room and get ahead of the hard questions before we ever talk to a buyer.</p><p>Just something to keep in mind as you think ahead.</p><p>— Jesse</p>'},
+{tag:'nathan-month11-sent',sub:'One Thing We\'d Tell Every Business Owner',html:'<p>Hey '+fn+',</p><p>Run your business like you\'re going to sell it even if you never plan to.</p><p>Clean financials. Documented processes. Strong team. Diversified customer base. Recurring revenue where possible.</p><p>We had a home services client who had no intention of selling—came to us for consulting on operational efficiency. We helped him tighten up the systems, clean up the books, build out a middle management layer. Two years later an unsolicited offer came in from a PE-backed rollup in his space. Because the business was already buttoned up, he was able to close in 60 days at a number he never expected. He didn\'t plan to sell—he just ran a great business and was ready when the moment came.</p><p>Those habits make your business more valuable, more scalable, and more enjoyable to run. And if the right offer comes along, you\'re ready.</p><p>— Jesse</p>'},
+{tag:'nathan-month12-sent',sub:'One Year of Staying in Touch',html:'<p>Hey '+fn+',</p><p>Realized it\'s been about a year since I first reached out. Just wanted to check in genuinely—how\'s business going?</p><p>In the past year we\'ve closed deals across roofing, pest control, healthcare staffing, pool construction, surveying, and home services. Every single one came down to the same thing—right preparation, right positioning, right buyer. We\'ve seen owners walk away with 2x what they thought their business was worth just by going through the right process.</p><p>If anything has shifted for you—whether you\'re thinking about growth, an exit, or just want a fresh valuation perspective—we\'d love to have a conversation. No pitch, just a call if it\'s useful.</p><p>Hope it\'s been a great year.</p><p>— Jesse</p>'}
+];
+// Industry overrides: swap in the most relevant story for the contact's industry
+// regardless of which month rotation they're on
+const storyOverrides={
+roofing:'nathan-month6-sent',
+roof:'nathan-month6-sent',
+pest:'nathan-month3-sent',
+pool:'nathan-month9-sent',
+plumbing:'nathan-month2-sent',
+insurance:'nathan-month4-sent',
+surveying:'nathan-month7-sent',
+hvac:'nathan-month8-sent',
+healthcare:'nathan-month8-sent',
+'home-services':'nathan-month11-sent',
+'home services':'nathan-month11-sent'
+};
+let overrideTag=null;
+for(const[k,v] of Object.entries(storyOverrides)){if(ind(k)){overrideTag=v;break;}}
+// Find next unsent month — prefer override if not yet sent
+const unsent=months.filter(m=>!t.includes(m.tag));
+if(!unsent.length){
+// All 11 sent — reset month tags and start over (handled by caller removing tags)
+return months[0];
+}
+// If there's an industry override and it hasn't been sent yet, lead with it
+if(overrideTag){const ov=unsent.find(m=>m.tag===overrideTag);if(ov)return ov;}
+return unsent[0];
+}};
 const STEPS=[{s:D0,tag:'nathan-day0-sent',next:D3,k:'day0'},{s:D3,tag:'nathan-day3-sent',next:D7,k:'day3'},{s:D7,tag:'nathan-day7-sent',next:D14,k:'day7'},{s:D14,tag:'nathan-day14-sent',next:D30,k:'day14'},{s:D30,tag:'nathan-day30-sent',next:DM,k:'day30'},{s:DM,tag:'nathan-monthly-sent',next:null,k:'monthly'}];
 async function main(){
 let all=[],pg=1;
@@ -152,7 +198,19 @@ while(1){const d=await api('/opportunities/search?pipeline_id='+NP+'&location_id
 let sent=0,rows='';
 for(const st of STEPS){if(sent>=MAX)break;
 const el=all.filter(o=>{if(o.pipelineStageId!==st.s)return false;const c=o.contact||{};if(!c.email)return false;const t=(c.tags||[]).map(x=>(typeof x==='string'?x:x.name).toLowerCase());return!t.includes(st.tag)&&!SKIP.some(s=>t.includes(s));});
-for(const o of el){if(sent>=MAX)break;const c=o.contact||{};const fn=(c.name||'').split(' ')[0]||'there';const co=c.companyName||o.name;const{sub,html}=EM[st.k](fn,co);
+for(const o of el){if(sent>=MAX)break;const c=o.contact||{};const fn=(c.name||'').split(' ')[0]||'there';const co=c.companyName||o.name;const ctags=(c.tags||[]).map(x=>(typeof x==='string'?x:x.name).toLowerCase());
+let sub,html;
+if(st.k==='monthly'){
+// Monthly: pick next unsent month email, tag it, loop after month 12
+const m=EM.monthly(fn,co,ctags);
+sub=m.sub;html=m.html;
+// Tag the specific month sent
+if(m.tag){await api('/contacts/'+c.id+'/tags',{method:'POST',body:JSON.stringify({tags:[m.tag]})});}
+// If all 12 months sent, remove all month tags to restart cycle
+const allMonthTags=['nathan-month2-sent','nathan-month3-sent','nathan-month4-sent','nathan-month5-sent','nathan-month6-sent','nathan-month7-sent','nathan-month8-sent','nathan-month9-sent','nathan-month10-sent','nathan-month11-sent','nathan-month12-sent'];
+const allSent=allMonthTags.every(mt=>ctags.includes(mt));
+if(allSent){await api('/contacts/'+c.id+'/tags',{method:'DELETE',body:JSON.stringify({tags:allMonthTags})});}
+}else{const e=EM[st.k](fn,co);sub=e.sub;html=e.html;}
 const r=await send(c.email,sub,html);
 if(r.id){await send('jesse@cbhadvisory.com','[SENT] '+sub,html);await api('/contacts/'+c.id+'/tags',{method:'POST',body:JSON.stringify({tags:[st.tag]})});if(st.next)await api('/opportunities/'+o.id,{method:'PUT',body:JSON.stringify({pipelineStageId:st.next})});rows+='<li>'+st.k.toUpperCase()+' → '+c.name+' ('+co+')</li>';sent++;console.log('✅',st.k,c.name);}
 await new Promise(r=>setTimeout(r,300));}}
