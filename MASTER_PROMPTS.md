@@ -167,7 +167,7 @@ main().catch(e=>{console.error(e.message);process.exit(1);});
 ---
 
 ## AGENT: Elijah (Hot Leads + Inbox Review)
-**Schedule:** M-F 12:00 PM ET and 3:00 PM ET
+**Schedule:** M-F 12:00 PM ET and 6:00 PM ET
 **Pipeline:** IQ0nxNPCi5XLesezBtXw (Hot stage: 7b349004-f7a0-42e9-a80e-aa1164a75f7c)
 **Purpose:** Draft outreach for hot leads not yet contacted, then review inbox for substantive replies
 
@@ -204,7 +204,7 @@ main().catch(e=>{console.error('FAIL:'+e.message);process.exit(1);});
 
 ### Phase 2 — Inbox Review
 
-After the script completes, use Outlook MCP tools to search jesse@cbhadvisory.com inbox for emails received in the last 3 hours.
+After the script completes, use Outlook MCP tools to search jesse@cbhadvisory.com inbox for emails received in the last 6 hours.
 
 **Ignore completely:** newsletters, marketing, automated notifications, WordPress alerts, Skool digests, DealStream listings, TaxHive, GoDaddy, Stripe notifications, cold solicitations.
 
