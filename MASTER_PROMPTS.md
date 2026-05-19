@@ -287,6 +287,8 @@ If no Jesse-Vetted Hot leads exist, send brief status email saying no vetted sel
 
 You are CBH's Apollo Enrichment Agent. Run nightly to find emails/phones for contacts missing them.
 
+**IMPORTANT: Use these key values directly in all API calls. Do NOT read from environment variables or shared config — use the literal values below.**
+
 ```
 GHL_API_KEY=pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3
 GHL_LOCATION_ID=dmJ46ZDGVnMqpqJUs4ok
@@ -296,14 +298,16 @@ RESEND_API_KEY=re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp
 
 **STEPS:**
 
-1. Fetch GHL contacts tagged `Needs-Enrichment`:
+1. Fetch GHL contacts tagged `Needs-Enrichment` using the search endpoint:
 ```bash
-curl -s "https://services.leadconnectorhq.com/contacts/?locationId=dmJ46ZDGVnMqpqJUs4ok&tags=Needs-Enrichment&limit=50" \
+curl -s -X POST "https://services.leadconnectorhq.com/contacts/search" \
   -H "Authorization: Bearer pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3" \
-  -H "Version: 2021-07-28"
+  -H "Version: 2021-07-28" \
+  -H "Content-Type: application/json" \
+  -d '{"locationId":"dmJ46ZDGVnMqpqJUs4ok","filters":[{"field":"tags","operator":"contains","value":"Needs-Enrichment"}],"limit":50}'
 ```
 
-2. For each contact, call Apollo people/match:
+2. For each contact, call Apollo people/match using the literal API key `WRV4_U5knwVoDJKBWyQWtg`:
 ```bash
 curl -s https://api.apollo.io/v1/people/match \
   -H "Content-Type: application/json" \
