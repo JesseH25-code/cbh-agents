@@ -1,7 +1,7 @@
 # CBH Agent Master Prompts
 > Single source of truth for all CBH Business Group automated agents.
 > Update here → all agents pick it up on next run.
-> Last updated: 2026-05-18
+> Last updated: 2026-05-20
 
 ---
 
@@ -39,6 +39,14 @@ DEAL_DD=9d52d38b-18ef-443a-bd65-51253fc7bff0
 DEAL_CLOSING=c2b122f8-1f9c-42b3-8b80-c118183b986e
 DEAL_CLOSED=68fe0dea-b617-4d05-a55d-c7ff649e409a
 ```
+
+---
+
+## REMINDERS
+> One-off reminders for Jesse. The Chief of Staff surfaces every open item in the daily Morning Briefing.
+> Mark an item done by changing `[ ]` to `[x]` (or delete the line) once it's handled.
+
+- [ ] Email Chris his BOV — surface in the morning briefing (added 2026-05-20)
 
 ---
 
@@ -83,10 +91,17 @@ curl -s "https://services.leadconnectorhq.com/tasks/?locationId=dmJ46ZDGVnMqpqJU
   -H "Version: 2021-07-28"
 ```
 
+**Step 1b — Read open reminders**
+
+Read the `## REMINDERS` section at the top of this file. Collect every open item (lines starting with `- [ ]`). Skip items already marked done (`- [x]`). These go in the 📌 Reminders block of the briefing so nothing slips.
+
 **Step 2 — Email structure**
 
 ```
 Subject: CBH Morning Briefing — [Today's date]
+
+📌 Reminders
+- Open items from the REMINDERS section (omit this block if there are none)
 
 🔴 Action Required Today
 - Overdue or due-today GHL tasks (contact name + task title)
