@@ -258,7 +258,7 @@ async function main(){
   const html='<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:750px;margin:auto;padding:20px;"><h2>[Elijah] '+eligible.length+' Hot Lead Drafts Ready — '+today+'</h2>'+rows+'</body></html>';
   await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:'Bearer '+R,'Content-Type':'application/json'},body:JSON.stringify({from:'jesse@cbhadvisory.com',to:['jesse@cbhadvisory.com'],subject:'[Elijah] '+eligible.length+' Hot Lead Drafts Ready — '+today,html})});
   await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:'Bearer '+R,'Content-Type':'application/json'},body:JSON.stringify({from:'jesse@cbhadvisory.com',to:['jesse@cbhadvisory.com'],subject:'[SENT] [Elijah] '+eligible.length+' Hot Lead Drafts Ready — '+today,html})});
-  for(const o of eligible){await api('/contacts/'+(o.contact||{}).id+'/tags',{method:'POST',body:JSON.stringify({tags:['Elijah-Drafted']})}).catch(()=>{});}
+  for(const o of eligible){const cid=(o.contact||{}).id;const co=(o.name.split(' — ')[1]||o.name).trim();await api('/contacts/'+cid+'/tags',{method:'POST',body:JSON.stringify({tags:['Elijah-Drafted']})}).catch(()=>{});await api('/contacts/'+cid+'/notes',{method:'POST',body:JSON.stringify({body:'[Elijah] Draft prepared — "Quick question about '+co+'" — '+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})})}).catch(()=>{});}
   console.log('Done: '+eligible.length+' drafted');}
 main().catch(e=>{console.error('FAIL:'+e.message);process.exit(1);});
 ```
@@ -343,6 +343,8 @@ Write and run a Node.js script using built-in fetch that does three things:
 
 (3) Fetch GHL contacts with tag Daniel-Day14-Sent updated 28+ days ago without Daniel-Monthly-Sent — add tag — draft 2-sentence check-in.
 
+**GHL Note Logging (Required):** After tagging any contact, immediately POST a note to that contact via `POST /contacts/{id}/notes` with body: `[Daniel BD] {stage} draft prepared — "{subject line}" — {date}`. This logs activity to the contact record in GHL so Jesse has a full history. Do this for every stage: Day0, Day14, Monthly.
+
 Then send one email per stage to jesse@cbhadvisory.com via Resend from jesse@cbhadvisory.com with all drafts telling Jesse to send from daniel@cbhadvisory.com. If nothing to do send brief status email.
 
 **Sent Log (Required):** After every Resend email, immediately send a second email with subject prefixed `[SENT]` and same body to jesse@cbhadvisory.com. This logs to Jesse's Outlook "CBH Sent Log" folder via auto-rule.
@@ -389,7 +391,7 @@ TO: jesse@cbhadvisory.com
 
 **STEP 4:** Send ONE summary email to Jesse via Resend from daniel@cbhadvisory.com subject: `Daniel Buyer Matches Ready [DATE]`. Note at top: "These drafts are for Jesse-Vetted sellers only. Do not send without final Jesse approval."
 
-**STEP 5:** Tag each processed contact `Daniel-Drafted` in GHL.
+**STEP 5:** Tag each processed contact `Daniel-Drafted` in GHL. Immediately after tagging, POST a note to that contact via `POST /contacts/{id}/notes` with body: `[Daniel Sourcing] Buyer match drafted — {N} referral partners matched — {date}`. This logs the activity to the contact record in GHL.
 
 If no Jesse-Vetted Hot leads exist, send brief status email saying no vetted sellers ready today.
 
