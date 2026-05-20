@@ -46,7 +46,7 @@ DEAL_CLOSED=68fe0dea-b617-4d05-a55d-c7ff649e409a
 > One-off reminders for Jesse. The Chief of Staff surfaces every open item in the daily Morning Briefing.
 > Mark an item done by changing `[ ]` to `[x]` (or delete the line) once it's handled.
 
-- [ ] Email Chris his BOV — surface in the morning briefing (added 2026-05-20)
+- [ ] Send Chris the BOV I prepared for his client (added 2026-05-20)
 
 ---
 
