@@ -208,14 +208,14 @@ if(st.k==='monthly'){
 const m=EM.monthly(fn,co,ctags);
 sub=m.sub;html=m.html;
 // Tag the specific month sent
-if(m.tag){await api('/contacts/'+c.id+'/tags',{method:'POST',body:JSON.stringify({tags:[m.tag]})});}
+if(m.tag){await api('/contacts/'+c.id+'/tags',{method:'POST',body:JSON.stringify({tags:[m.tag]})});await api('/contacts/'+c.id+'/notes',{method:'POST',body:JSON.stringify({body:'[Nathan MONTHLY] Email sent: "'+m.sub+'" — '+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})})});}
 // If all 12 months sent, remove all month tags to restart cycle
 const allMonthTags=['nathan-month2-sent','nathan-month3-sent','nathan-month4-sent','nathan-month5-sent','nathan-month6-sent','nathan-month7-sent','nathan-month8-sent','nathan-month9-sent','nathan-month10-sent','nathan-month11-sent','nathan-month12-sent'];
 const allSent=allMonthTags.every(mt=>ctags.includes(mt));
 if(allSent){await api('/contacts/'+c.id+'/tags',{method:'DELETE',body:JSON.stringify({tags:allMonthTags})});}
 }else{const e=EM[st.k](fn,co);sub=e.sub;html=e.html;}
 const r=await send(c.email,sub,html);
-if(r.id){await send('jesse@cbhadvisory.com','[SENT] '+sub,html);await api('/contacts/'+c.id+'/tags',{method:'POST',body:JSON.stringify({tags:[st.tag]})});if(st.next)await api('/opportunities/'+o.id,{method:'PUT',body:JSON.stringify({pipelineStageId:st.next})});rows+='<li>'+st.k.toUpperCase()+' → '+c.name+' ('+co+')</li>';sent++;console.log('✅',st.k,c.name);}
+if(r.id){await send('jesse@cbhadvisory.com','[SENT] '+sub,html);await api('/contacts/'+c.id+'/tags',{method:'POST',body:JSON.stringify({tags:[st.tag]})});if(st.next)await api('/opportunities/'+o.id,{method:'PUT',body:JSON.stringify({pipelineStageId:st.next})});await api('/contacts/'+c.id+'/notes',{method:'POST',body:JSON.stringify({body:'[Nathan '+st.k.toUpperCase()+'] Email sent: "'+sub+'" — '+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})})});rows+='<li>'+st.k.toUpperCase()+' → '+c.name+' ('+co+')</li>';sent++;console.log('✅',st.k,c.name);}
 await new Promise(r=>setTimeout(r,300));}}
 const today=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
 const sh='<h2>[Nathan] '+sent+' emails sent — '+today+'</h2><ul>'+rows+'</ul>';
@@ -377,8 +377,9 @@ TO: jesse@cbhadvisory.com
 5. Ben Shapiro — Ben.shapiro3@gmail.com — Any industry, min $3M revenue
 6. Dan Santoro — Ridge Peak Partners — Dan@ridgepeak-partners.com — Roofing, min $3M revenue
 7. Steve Tamjidi — Angeles Equity Partners — steve@angelesep.com — Any industry, min $30M revenue
+8. Mike Blattman — Nordik — mblattman@nordik.com — Windows & doors / manufacturing preferred
 
-**MATCHING RULES:** Any deal $3M+ show to partners 1-6. Any deal $30M+ show to all 7. Roofing or home services always include Amit and Dan.
+**MATCHING RULES:** Any deal $3M+ show to partners 1-6. Any deal $30M+ show to all 7. Roofing or home services always include Amit and Dan. Windows/doors/manufacturing include Mike Blattman.
 
 **STEP 1:** Fetch Hot leads without Daniel-Drafted tag from pipeline IQ0nxNPCi5XLesezBtXw stage 7b349004-f7a0-42e9-a80e-aa1164a75f7c. Fetch each contact. SKIP any without Jesse-Vetted tag.
 
