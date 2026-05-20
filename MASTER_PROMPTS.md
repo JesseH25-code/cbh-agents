@@ -43,12 +43,13 @@ DEAL_CLOSED=68fe0dea-b617-4d05-a55d-c7ff649e409a
 ---
 
 ## ACTIVE LISTINGS (update here when deals change)
-- **Jeff Lane** — Closing
-- **Randy Squires** — Waiting on another buyer to provide written terms, likely going with them
+- **Jeff Lane (Alliance Pavers)** — Marketing stage, no LOI yet
+- **Randy Squires (RJ Landscaping)** — LOI stage, Carlos (buyer) getting paperwork together, goal to close in 30-45 days before July
 - **Rick Reid (Handcrafted Iron Doors)** — Waiting to hear back on meeting with Mike from Nordick
-- **Rob Dupree (A Helping Hand)** — LOI stage, $28M est. valuation
-- **Ann (Dorco Enterprises)** — LOI stage, re-engaging Sundial buyers
+- **Rob Dupree & Rahul Pathak (A Helping Hand)** — LOI stage, $28M est. valuation, close to agreement
+- **Ann (Dorco Enterprises)** — LOI stage, re-engaging Sundial buyers. Listing agreement expires July.
 - **Coramia Deal** — Active, time sensitive. Parties: Heather Bell (Vesta Capital), Edgaras (Raynexus), Kenz (Wholesalez)
+- **Carlos Sanchez (Southwest Tennis LLC)** — BOV requested, data room in progress
 
 ---
 
