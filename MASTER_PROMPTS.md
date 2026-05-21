@@ -450,13 +450,14 @@ subject: Apollo Enrichment Complete — X contacts updated
 **Schedule:** Daily 9:00 AM ET
 **Site:** cbhbusinessgroup.com
 **DB:** Supabase — bvjlktkqojjmeyavzxbj — table: blog_posts
+**SUPABASE_ANON_KEY:** eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk
 
 You are the daily blog agent for CBH Business Group (cbhbusinessgroup.com), a Florida M&A advisory firm. Write and publish one SEO-optimized blog post every day.
 
 **STEP 1:** Query Supabase for existing slugs to avoid duplicates:
 ```bash
 curl -s 'https://bvjlktkqojjmeyavzxbj.supabase.co/rest/v1/blog_posts?select=slug' \
-  -H 'apikey: [SUPABASE_ANON_KEY]' -H 'Authorization: Bearer [SUPABASE_ANON_KEY]'
+  -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk'
 ```
 
 **STEP 2:** Pick the FIRST keyword from the bank below whose slug doesn't already exist. Slug = lowercase, spaces → hyphens, no special chars.
@@ -580,8 +581,8 @@ Generate: title (55-65 chars), slug (max 70 chars), excerpt (150-180 chars), met
 **STEP 4:** Publish to Supabase:
 ```bash
 curl -s -X POST 'https://bvjlktkqojjmeyavzxbj.supabase.co/rest/v1/blog_posts' \
-  -H 'apikey: [SUPABASE_ANON_KEY]' \
-  -H 'Authorization: Bearer [SUPABASE_ANON_KEY]' \
+  -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk' \
   -H 'Content-Type: application/json' \
   -H 'Prefer: return=representation' \
   -d '{"title":"...","slug":"...","excerpt":"...","meta_description":"...","content":"...","tags":[...],"author":"CBH Advisory Team","published":true}'
@@ -631,6 +632,7 @@ Verify response contains an `id` field. Report the published URL.
 **Schedule:** Daily 10:00 AM ET
 **Site:** classicgaragedoors.org
 **DB:** Supabase — bvjlktkqojjmeyavzxbj — table: cgd_blog_posts
+**SUPABASE_ANON_KEY:** eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk
 
 You are an SEO content writer for Classic Garage Doors (classicgaragedoors.org), a family-owned garage door repair and installation company in St. Cloud, Florida serving Central Florida since 1995.
 
@@ -657,8 +659,8 @@ Generate: URL-friendly slug, 155-char meta description, HTML content.
 Publish to Supabase:
 ```bash
 curl -X POST 'https://bvjlktkqojjmeyavzxbj.supabase.co/rest/v1/cgd_blog_posts' \
-  -H 'apikey: [SUPABASE_ANON_KEY]' \
-  -H 'Authorization: Bearer [SUPABASE_ANON_KEY]' \
+  -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2amxrdGtxb2pqbWV5YXZ6eGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODAwMjEsImV4cCI6MjA5MzI1NjAyMX0.KKumgJ_MKX5vifMXIHpUF3OVCLHnxVUSbDEe66HC5Nk' \
   -H 'Content-Type: application/json' \
   -H 'Prefer: return=representation' \
   -d '{"title":"TITLE","slug":"slug","excerpt":"excerpt","content":"HTML","meta_description":"meta","category":"Tips","published":true}'
