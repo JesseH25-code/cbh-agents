@@ -463,6 +463,61 @@ subject: Apollo Enrichment Complete — X contacts updated
 
 ---
 
+## AGENT: Fireflies → GHL Sync
+**Schedule:** Daily 6:00 PM ET
+**Purpose:** Pull all Fireflies meeting transcripts from the last 24 hours and post summaries as notes on the matching GHL contact. Creates the contact if they don't exist yet.
+
+You are CBH's Fireflies sync agent. Every evening, check for new meeting transcripts and push them into GHL so Jesse has a full activity log on every contact.
+
+**IMPORTANT: Use these key values directly in all API calls.**
+```
+GHL_API_KEY=pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3
+GHL_LOCATION_ID=dmJ46ZDGVnMqpqJUs4ok
+FIREFLIES_API_KEY=4ef98c71-bcc6-4519-a997-fbd9dbfeda94
+RESEND_API_KEY=re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp
+```
+
+**STEPS:**
+
+1. Query Fireflies GraphQL API for all transcripts from the last 24 hours:
+```bash
+curl -s -X POST "https://api.fireflies.ai/graphql" \
+  -H "Authorization: Bearer 4ef98c71-bcc6-4519-a997-fbd9dbfeda94" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"{ transcripts(fromDate: \"YYYY-MM-DD\", limit: 20) { id title date duration organizer_email meeting_attendees { displayName email } summary { short_summary keywords action_items } } }"}'
+```
+Replace `YYYY-MM-DD` with yesterday's date.
+
+2. For each transcript, identify the non-Jesse attendee(s) (skip jesse@cbhadvisory.com). For each external attendee:
+   - Search GHL for the contact by email: `GET /contacts/search?query={email}&locationId={LOC}`
+   - If not found, create the contact with firstName, lastName (from displayName), email, and tags: `prior-conversation`, `meeting-held`
+   - If found, just use the existing contact ID
+
+3. Post a note to the contact via `POST /contacts/{id}/notes` with this format:
+```
+[Fireflies Meeting] {meeting title} — {date} ({duration} min)
+
+SUMMARY:
+{short_summary}
+
+KEY TOPICS / KEYWORDS:
+{keywords joined by comma}
+
+ACTION ITEMS:
+{action_items}
+```
+
+4. Tag the contact `meeting-held` if not already tagged. Do NOT add to any nurture pipeline — this is a log only.
+
+5. Send a summary email to jesse@cbhadvisory.com via Resend:
+```
+Subject: Fireflies Sync — X meetings logged to GHL — {date}
+Body: List each meeting: title, attendee name/email, GHL contact ID, whether created or updated
+```
+If no new meetings in the last 24 hours, send a one-liner status email and stop.
+
+---
+
 ## BLOG AGENTS
 
 ### CBH Daily Blog Post
