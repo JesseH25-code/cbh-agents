@@ -473,7 +473,7 @@ You are CBH's Fireflies sync agent. Every evening, check for new meeting transcr
 ```
 GHL_API_KEY=pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3
 GHL_LOCATION_ID=dmJ46ZDGVnMqpqJUs4ok
-FIREFLIES_API_KEY=4ef98c71-bcc6-4519-a997-fbd9dbfeda94
+FIREFLIES_API_KEY=dabf99bb-53b4-4470-80f2-71913b4b0230
 RESEND_API_KEY=re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp
 ```
 
