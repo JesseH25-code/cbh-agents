@@ -1,7 +1,7 @@
 # CBH Agent Master Prompts
 > Single source of truth for all CBH Business Group automated agents.
 > Update here → all agents pick it up on next run.
-> Last updated: 2026-05-18
+> Last updated: 2026-05-24
 
 ---
 
@@ -76,12 +76,22 @@ Map stage IDs to names:
 - c2b122f8 = Closing
 - 68fe0dea = Closed/Won
 
-Also fetch open GHL tasks due today or overdue:
+After fetching opportunities, extract the `contactId` from each opportunity. Then fetch tasks per contact — GHL has no location-wide tasks endpoint, so you must loop per contact:
+
 ```bash
-curl -s "https://services.leadconnectorhq.com/tasks/?locationId=dmJ46ZDGVnMqpqJUs4ok&status=incompleted&limit=50" \
+# For each contactId from the opportunities above:
+curl -s "https://services.leadconnectorhq.com/contacts/{contactId}/tasks" \
   -H "Authorization: Bearer pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3" \
   -H "Version: 2021-07-28"
 ```
+
+The response returns a `tasks` array. For each task, check `completed` (boolean) and `dueDate` (ISO date string). Keep only tasks where `completed: false`. Compare `dueDate` to today's date (use the date in ET):
+- Due today or earlier (overdue) → **🔴 Action Required Today**
+- Due within the next 7 days (tomorrow through +7) → **📅 This Week**
+
+Format each task as: `Contact Name — Task Title` (for 🔴) or `Contact Name — Task Title — Due [Month Day]` (for 📅).
+
+If a contact has no tasks or the endpoint returns an error for that contact, skip it silently. Do NOT include any "tasks unavailable" fallback text — if there are no tasks, omit those sections or show "No tasks due today" / "No tasks this week."
 
 **Step 2 — Email structure**
 
