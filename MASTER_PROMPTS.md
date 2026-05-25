@@ -210,8 +210,15 @@ let all=[],pg=1;
 while(1){const d=await api('/opportunities/search?pipeline_id='+NP+'&location_id='+L+'&limit=100&page='+pg);const o=d.opportunities||[];all=all.concat(o);if(o.length<100)break;pg++;}
 let sent=0,rows='';
 for(const st of STEPS){if(sent>=MAX)break;
-const el=all.filter(o=>{if(o.pipelineStageId!==st.s)return false;const c=o.contact||{};if(!c.email)return false;const t=(c.tags||[]).map(x=>(typeof x==='string'?x:x.name).toLowerCase());return!t.includes(st.tag)&&!SKIP.some(s=>t.includes(s));});
-for(const o of el){if(sent>=MAX)break;const c=o.contact||{};const fn=(c.name||'').split(' ')[0]||'there';const co=c.companyName||o.name;const ctags=(c.tags||[]).map(x=>(typeof x==='string'?x:x.name).toLowerCase());
+const el=all.filter(o=>{if(o.pipelineStageId!==st.s)return false;const c=o.contact||{};if(!c.email)return false;return true;});
+for(const o of el){if(sent>=MAX)break;
+// FRESH contact lookup to get current tags (embedded opportunity tags can be stale)
+const fresh=await api('/contacts/'+(o.contact||{}).id);const c=fresh.contact||o.contact||{};
+if(!c.email)continue;
+const ctags=(c.tags||[]).map(x=>(typeof x==='string'?x:x.name).toLowerCase());
+// Skip check on fresh tags
+if(ctags.includes((st.tag||'').toLowerCase())||SKIP.some(s=>ctags.includes(s)))continue;
+const fn=(c.name||c.firstName||'').split(' ')[0]||'there';const co=c.companyName||o.name;
 let sub,html;
 if(st.k==='monthly'){
 // Monthly: pick next unsent month email, tag it, loop after month 12
