@@ -987,11 +987,13 @@ RESEND_KEY=re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp
 ### CHECK 1 — Website Uptime
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}" https://cbhbusinessgroup.com
-curl -s -o /dev/null -w "%{http_code}" https://simplispect.com
+curl -s -o /dev/null -w "%{http_code}" -L https://cbhbusinessgroup.com
+curl -s -o /dev/null -w "%{http_code}" -L https://simplispect.com
+curl -s -o /dev/null -w "%{http_code}" -L https://hastingshomeventures.com
+curl -s -o /dev/null -w "%{http_code}" -L https://classicgaragedoors.org
 ```
 
-✅ Pass: both return 200
+✅ Pass: all return 200 (use -L to follow redirects)
 🚨 Fail: anything else — report the site and status code
 
 ---
