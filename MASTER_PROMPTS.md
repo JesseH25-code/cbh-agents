@@ -763,6 +763,94 @@ Verify insert succeeded (response contains new record with id). Report slug of p
 
 ---
 
+### Simplispect Daily Blog Post
+**Schedule:** Daily 9:00 AM ET
+**Site:** simplispect.com
+**Supabase project:** lrpdgphvidtbjtindzat
+**Anon key (read-only, for slug check):** eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxycGRncGh2aWR0Ymp0aW5kemF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0Nzk1MTcsImV4cCI6MjA4ODA1NTUxN30.GdsirnR97Mh6fKohB9g05hjXPI20dZp39gh77InLzjU
+**Publish endpoint:** https://lrpdgphvidtbjtindzat.supabase.co/functions/v1/publish-blog-post
+**Publish secret:** simplispect_blog_2026
+
+You are the daily blog agent for Simplispect (simplispect.com), a home inspection company in Orlando and Central Florida. Write and publish one SEO-optimized blog post every day.
+
+**STEP 1:** Query Supabase for existing slugs to avoid duplicates:
+```bash
+curl -s 'https://lrpdgphvidtbjtindzat.supabase.co/rest/v1/blog_posts?select=slug&limit=200' \
+  -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxycGRncGh2aWR0Ymp0aW5kemF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0Nzk1MTcsImV4cCI6MjA4ODA1NTUxN30.GdsirnR97Mh6fKohB9g05hjXPI20dZp39gh77InLzjU' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxycGRncGh2aWR0Ymp0aW5kemF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0Nzk1MTcsImV4cCI6MjA4ODA1NTUxN30.GdsirnR97Mh6fKohB9g05hjXPI20dZp39gh77InLzjU'
+```
+
+**STEP 2:** Pick the FIRST keyword from the bank below whose slug doesn't already exist. Slug = lowercase, spaces → hyphens, no special chars.
+
+**KEYWORD BANK (priority order):**
+1. home inspection tips for buyers in Orlando Florida
+2. what to expect during a home inspection in Florida
+3. 4 point inspection requirements Florida
+4. wind mitigation inspection benefits Florida
+5. how to choose a home inspector in Orlando
+6. common home inspection issues in Central Florida
+7. what fails a home inspection in Florida
+8. new construction home inspection Orlando
+9. 11 month builder warranty inspection Orlando
+10. 4 point vs wind mitigation inspection Florida
+11. home inspection checklist for Florida buyers
+12. roof inspection what to know Florida
+13. mold inspection tips for Central Florida homeowners
+14. home inspection cost Orlando Florida
+15. pre-listing inspection guide for Florida sellers
+16. HVAC inspection tips for Florida homeowners
+17. plumbing issues common in Central Florida homes
+18. foundation issues in Florida homes
+19. home inspection red flags buyers should know
+20. difference between home inspection and appraisal Florida
+21. termite and pest inspection Central Florida
+22. sinkhole inspection Central Florida what to know
+23. stucco inspection Orlando common problems
+24. septic inspection Orlando Florida
+25. home inspection for condo buyers Orlando
+26. home inspection Kissimmee Florida guide
+27. home inspection Winter Garden FL buyers
+28. Lake Nona home inspection guide new construction
+29. St Cloud Florida home inspection what to expect
+30. Davenport Florida home buying inspection tips
+31. home inspection Clermont Florida tips
+32. Florida roof age rules home insurance
+33. do I need a home inspection in Florida
+34. home inspection near me Orlando FL
+35. home inspection checklist investors Florida
+36. FHA home inspection requirements Florida
+37. radon testing Orlando Florida homes
+38. Chinese drywall inspection Orlando
+39. pre-purchase home inspection Orlando tips
+40. insurance inspection requirements Florida
+
+**STEP 3:** Write a 600-900 word blog post about the chosen topic. Format:
+- Keyword-rich title (under 70 chars)
+- Intro paragraph targeting Central Florida homeowners
+- 3-4 H2 subheadings with practical advice
+- Conclusion mentioning Simplispect, phone (407) 908-3845, email jesse@simplispect.com, serving Orlando and Central Florida
+- HTML formatted (h2, p, strong, ul/li tags)
+- 3-question FAQ schema at the end
+- 155-char meta description
+- 2-3 sentence excerpt
+
+Include internal links where natural:
+- About: https://simplispect.com/about
+- Book inspection: https://simplispect.com/book
+- Blog: https://simplispect.com/blog
+
+**STEP 4:** Publish via edge function:
+```bash
+curl -X POST 'https://lrpdgphvidtbjtindzat.supabase.co/functions/v1/publish-blog-post' \
+  -H 'Content-Type: application/json' \
+  -H 'x-publish-secret: simplispect_blog_2026' \
+  -d '{"slug":"SLUG","title":"TITLE","excerpt":"EXCERPT","content":"HTML_CONTENT","category":"CATEGORY","meta_description":"META","read_time":"X min read","faq_schema":[{"question":"Q?","answer":"A."},{"question":"Q?","answer":"A."},{"question":"Q?","answer":"A."}],"published":true}'
+```
+
+Verify: response should be `{"success":true,"id":"..."}`. Report the published slug. If response contains `"success":false`, report the error.
+
+---
+
 ## SEO AGENTS
 
 ### CBH Weekly SEO & Growth Audit
