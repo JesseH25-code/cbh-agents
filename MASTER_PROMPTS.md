@@ -1059,13 +1059,15 @@ curl -s "https://api.resend.com/emails?limit=100" \
   -H "Authorization: Bearer re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp"
 ```
 
-Check if each scheduled agent sent at least 1 email in the past 24 hours. Expected agents:
+Check if each scheduled agent sent at least 1 email in the past 24 hours. Expected agents and their actual subject patterns:
 - **CoS** (daily) — subject contains "CBH Morning Briefing"
-- **Nathan** (M-F) — subject contains "Nathan" or from pattern
-- **Daniel BD** (M-F) — subject contains "Daniel"
-- **Blog posts** — CBH Daily Blog, HHV Daily Blog, Classic Garage Doors blog
+- **Nathan** (M-F) — subject contains "Wanted to Connect" OR "Re: Wanted to Connect" OR "The #1 Thing" OR "What Separates" OR "What Buyers Actually" OR sender is jesse@cbhadvisory.com and sent to a non-CBH address in bulk
+- **Daniel BD** (M-F) — subject contains "Deal Alert" OR "[Daniel]"
+- **Daniel Direct** (M-F) — subject contains "Checking in" or similar personal outreach
+- **Blog posts** — Blog agents post directly to Supabase and do NOT send confirmation emails through Resend. Do NOT flag these as missing — they are not Resend-based.
 
 Only flag M-F agents as missing if today is a weekday.
+Note: Nathan sends 15 emails/day with subjects like "Wanted to Connect" — look for volume of outbound emails from jesse@cbhadvisory.com, not for "Nathan" in subject.
 
 ✅ Pass: CoS sent today, M-F agents sent if today is a weekday
 🚨 Fail: list any expected agent that sent 0 emails → "CoS did not send today — check CCR schedule"
