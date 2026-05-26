@@ -5,6 +5,20 @@
 
 ---
 
+## EMAIL SENDING RULES (applies to ALL agents)
+
+**SENDING:** Use Resend API via Bash. Key: re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp. From: jesse@cbhadvisory.com. Sent emails file to CBH Sent Log folder in Outlook (not Sent Items — that's normal).
+
+**REPLY THREADING — REQUIRED FOR ALL REPLIES:**
+1. Before sending any reply, search Outlook for the original email and grab its `internetMessageId`
+2. Include in every Resend reply: `"headers": {"In-Reply-To": "<original-message-id>", "References": "<original-message-id>"}`
+3. This threads replies properly in Outlook as a real conversation chain
+
+**[SENT] LOG COPIES — REQUIRED FOR ALL SENDS:**
+After every Resend email, immediately send a second email to jesse@cbhadvisory.com with subject prefixed `[SENT]` and the FULL email body (not a one-liner). This logs to CBH Sent Log folder so Jesse can see exactly what was sent.
+
+---
+
 ## SHARED CONFIG
 ```
 GHL_KEY=pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3
