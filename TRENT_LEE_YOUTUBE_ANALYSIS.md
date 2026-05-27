@@ -114,7 +114,40 @@ His SDE/EBITDA and due-diligence videos flop *as titled*. Same content wins with
 
 ---
 
-## 5. Method / reproducibility
-- Pulled live via YouTube innertube `browse` endpoint (`youtubei.googleapis.com`, the only YouTube host on this environment's network allowlist — `youtube.com` is blocked).
-- Scripts: `/tmp/yt_pull.py` (long-form), `/tmp/yt_shorts.py` (Shorts), `/tmp/yt_themes.py` (theme aggregation). Raw ranked output: `/tmp/trentlee_sorted.json`, `/tmp/trentlee_shorts.json`.
-- View counts are YouTube's public displayed values (rounded by YouTube, e.g. "16K"). Good for ranking/relative comparison, not exact analytics.
+## 5. Whole-niche scan — best-performing topics across ALL buy/sell-a-business channels
+
+Pulled the libraries of **13 channels in the business-buying/selling space** (1,313 videos w/ live views): Codie Sanchez, Acquiring Minds, David C Barnett, Carl Allen, Roland Frasier, Walker Deibel, Quiet Light, BizBuySell, John Warrillow, On The Revel, Trent Lee, + others. Topics ranked by **median views** (the honest central measure — averages are distorted by a few Codie Sanchez mega-hits).
+
+| Rank | Topic | # vids | Median | Avg | Proven example (views) |
+|---|---|---|---|---|---|
+| 1 | **Seller / owner financing & creative deal terms** | 12 | **1,350** | 2,721 | Sell Using Seller Financing (9.2K) |
+| 2 | **Buy a business / acquisition (incl. "no money down")** | 115 | 1,100 | 20,938 | How to Buy a Business With No Money (988K, Codie) |
+| 3 | **Deal structure / LOI / negotiation** | 44 | 941 | 3,335 | How To Structure a Business Acquisition (69K, Carl Allen) |
+| 4 | **Finding deals / off-market sourcing** | 8 | 794 | 46,630 | How to Find Businesses to Buy (364K) |
+| 5 | **SDE / EBITDA / financials / add-backs** | 71 | 750 | 42,809 | (skewed by Codie listicles) |
+| 6 | **SBA / deal financing** | 71 | 745 | 6,046 | Buy a Business Without Banks (132K, Carl Allen) |
+| 7 | **Valuation / "what's it worth" / multiples** | 72 | 697 | 46,302 | How to Value a Small Business (73K, Walker Deibel) |
+| 8 | **Mistakes / deal killers / lessons** | 65 | 612 | 186,634 | Businesses That Always Fail (2.8M, Codie) |
+| 9 | Sell / exit your business | 73 | 561 | 4,714 | Top 5 Mistakes Selling a Business (29K, D. Barnett) |
+| 10 | Owner dependency / make it sellable / scale | 21 | 329 | 12,918 | 4-Step Process to Build to Sell (148K) |
+| 11 | Working with brokers / advisors | 39 | 294 | 1,462 | Get Brokers to Take You Seriously (16K, Trent Lee) |
+
+### The one format that dominates the whole niche
+Codie Sanchez's biggest videos are **data-backed "which businesses" listicles** — *"6 Businesses That Never Fail"* (5.8M), *"7 Businesses That Always Fail"* (2.8M). Roland Frasier's *"Hidden Goldmine: Millions From Boring Old Businesses"* (41K) is the same play. This format out-reaches everything. **CBH sell-side translation:** *"The Service Businesses Buyers Fight Over (and Pay the Highest Multiples For)."*
+
+### Realistic benchmark for CBH (median views; Codie excluded as an outlier)
+Walker Deibel ~3,850 · Carl Allen ~1,100 · Roland Frasier ~700 · David Barnett ~700 · BizBuySell ~430 · Quiet Light ~125 · Trent Lee ~91. A focused, well-titled sell-side channel realistically lands **~700–4,000 median** with periodic **30K–130K** breakouts when a topic + title hits. Trent's low median (~91) is a volume-over-quality warning: posting 1.7K videos didn't build reach — **a smaller number of sharp, well-titled videos wins.**
+
+### What this means for CBH (net of both analyses)
+1. **Seller/owner financing & creative deal structure** is the #1 underserved, high-performing topic in the *entire* niche — and CBH actually does this for a living. Own it.
+2. **Valuation / "what's my business worth"** is the evergreen search-intent winner — feeds the calculator → BOV funnel directly.
+3. **"Mistakes / deal killers" + data-listicle framing** is the highest-engagement *format*; wrap CBH's real content (concentration, owner dependency, add-backs) in it.
+4. **Real deal stories** ("How a 27-yr-old scaled…", "$9.5M trailer business") are the advisory tier's reliable hits — CBH's roofing $2M→$4.5M and pool 2.4x stories are tailor-made.
+5. **Buy-side topics get the most raw reach** but are top-of-funnel for CBH; use sparingly to feed the 4,000-buyer network, keep the core sell-side.
+
+---
+
+## 6. Method / reproducibility
+- Pulled live via YouTube innertube `browse`/`search` endpoints (`youtubei.googleapis.com`, the only YouTube host on this environment's network allowlist — `youtube.com` is blocked).
+- Scripts: `/tmp/yt_pull.py` (Trent long-form), `/tmp/yt_shorts.py` (Shorts), `/tmp/yt_themes.py` (Trent themes), `/tmp/niche.py` (13-channel niche scan + topic ranking). Raw output: `/tmp/trentlee_sorted.json`, `/tmp/trentlee_shorts.json`, `/tmp/niche.json`.
+- View counts are YouTube's public displayed values (rounded, e.g. "16K"/"5.8M"). Good for ranking/relative comparison, not exact analytics. Channel libraries capped at ~150 most-recent long-form videos each.
