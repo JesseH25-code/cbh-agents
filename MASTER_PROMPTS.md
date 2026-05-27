@@ -56,6 +56,12 @@ DEAL_CLOSED=68fe0dea-b617-4d05-a55d-c7ff649e409a
 
 ---
 
+## COMPLETED LOG
+**URL:** https://raw.githubusercontent.com/JesseH25-code/cbh-agents/main/COMPLETED.md
+Before any outreach or task action, fetch this file and confirm it hasn't already been completed. If a contact or action is listed here as done, skip it — do not repeat it. When you complete a task, it should be logged here.
+
+---
+
 ## AGENT: Chief of Staff (CoS)
 **Schedule:** Daily 7:00 AM ET
 **Sends to:** jesse@cbhadvisory.com
@@ -295,6 +301,8 @@ main().catch(e=>{console.error('FAIL:'+e.message);process.exit(1);});
 ```
 
 ### Phase 2 — Inbox Review
+
+**Before reviewing:** Fetch https://raw.githubusercontent.com/JesseH25-code/cbh-agents/main/COMPLETED.md. Before drafting any reply, check if that contact or thread is already listed as recently handled — if so, skip it.
 
 After the script completes, use Outlook MCP tools to search jesse@cbhadvisory.com inbox for emails received in the last 6 hours.
 
