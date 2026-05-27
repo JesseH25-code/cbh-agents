@@ -86,8 +86,7 @@ CBH is **sell-side**: FL M&A advisory for service businesses (~$3M–$50M), free
 | Working title | Modeled on (his views) | CBH angle / existing asset |
 |---|---|---|
 | **How to Double the Value of Your Business Before You Sell It** | #4 (4.0K) | Owner-dependency + clean financials + recurring revenue (Nathan day7/day14/month5). Anchor on the BOV. |
-| **Seller Financing Explained: How to Sell for More Without Scaring Buyers** | #2 (9.2K) + top Short | Highest-avg theme, barely covered by anyone sell-side. Use a real CBH structure example. |
-| **Top 5 Ways to Structure a Deal When You Sell** | #5 (3.9K) | Deal structuring is core CBH value-add. Tie to "we know what 4,000 buyers will actually pay." |
+| **How Deals Actually Get Structured (Cash vs. Seller Notes vs. Earnouts)** | #2 (9.2K) + #5 (3.9K) + top Short | Highest-performing topic in the niche, barely covered sell-side. **Framing note: CBH does NOT offer seller financing — it's one structuring lever Jesse *explains as the advisor*.** Deal structuring is core CBH value-add; tie to "we know what 4,000 buyers will actually pay." |
 | **What Brokers Really Look At — and How to Make Buyers Compete for You** | #1 (16K) | Flip his #1 hit to the seller's side: how a real process creates competitive tension. CBH success-story proof. |
 | **5 Deal Killers That Tank a Business Sale (and How We Fix Them)** | #8 (1.7K) | Customer concentration, owner dependency, messy books, lease risk (Nathan month4 + top Shorts). |
 | **The #1 Hidden Expense That Quietly Kills Your Valuation** | top Shorts (2.7K/3.0K) | "$25K expense → $75K value loss", short-lease risk. Add-back normalization (Nathan month2). |
@@ -139,7 +138,7 @@ Codie Sanchez's biggest videos are **data-backed "which businesses" listicles** 
 Walker Deibel ~3,850 · Carl Allen ~1,100 · Roland Frasier ~700 · David Barnett ~700 · BizBuySell ~430 · Quiet Light ~125 · Trent Lee ~91. A focused, well-titled sell-side channel realistically lands **~700–4,000 median** with periodic **30K–130K** breakouts when a topic + title hits. Trent's low median (~91) is a volume-over-quality warning: posting 1.7K videos didn't build reach — **a smaller number of sharp, well-titled videos wins.**
 
 ### What this means for CBH (net of both analyses)
-1. **Seller/owner financing & creative deal structure** is the #1 underserved, high-performing topic in the *entire* niche — and CBH actually does this for a living. Own it.
+1. **Deal structuring** is the #1 underserved, high-performing topic in the *entire* niche — and structuring deals is exactly what CBH does. Seller financing is the single most-searched *sub-topic* inside it; Jesse can teach it authoritatively as the advisor without CBH ever being the lender. Own the umbrella, use seller financing as the hook.
 2. **Valuation / "what's my business worth"** is the evergreen search-intent winner — feeds the calculator → BOV funnel directly.
 3. **"Mistakes / deal killers" + data-listicle framing** is the highest-engagement *format*; wrap CBH's real content (concentration, owner dependency, add-backs) in it.
 4. **Real deal stories** ("How a 27-yr-old scaled…", "$9.5M trailer business") are the advisory tier's reliable hits — CBH's roofing $2M→$4.5M and pool 2.4x stories are tailor-made.
