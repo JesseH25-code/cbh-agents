@@ -1105,6 +1105,8 @@ curl -s -o /dev/null -w "%{http_code}" -L https://classicgaragedoors.org
 ✅ Pass: all return 200 (use -L to follow redirects)
 🚨 Fail: anything else — report the site and status code
 
+**IMPORTANT: All 4 sites must appear in the email output — even if green. Never omit a site from the report.**
+
 ---
 
 ### CHECK 2 — Vercel Deploy Freshness (the "17-day freeze" detector)
@@ -1201,6 +1203,8 @@ Infrastructure Audit — [date] [time] ET
 WEBSITES
 ✅ cbhbusinessgroup.com — 200 OK
 ✅ simplispect.com — 200 OK
+✅ hastingshomeventures.com — 200 OK
+✅ classicgaragedoors.org — 200 OK
 
 VERCEL DEPLOY FRESHNESS
 ✅ CBH site — live (deployed 2h ago, matches GitHub HEAD)
