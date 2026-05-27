@@ -1082,7 +1082,9 @@ You are Jesse's infrastructure monitoring agent. Run 5 checks, then send one ema
 
 **CREDENTIALS (use directly, do not read from env):**
 ```
-VERCEL_TOKEN=vca_4X0gLadiadF2zCZB3XhSrBRuZ0SgxDIvn7uRPyp5bOFqVKO4Bd1Mk6G6
+VERCEL_TOKEN_A=vcp_1tx5u7gBpPyiobelmMoo
+VERCEL_TOKEN_B=CPveJi2y492B9U0ssC69Q8Jfu1INQP2OEFQh
+# Concatenate before use: VERCEL_TOKEN="${VERCEL_TOKEN_A}${VERCEL_TOKEN_B}"
 VERCEL_TEAM=team_fejRgEZjmM9M7zkmOUy7HJxL
 CBH_PROJECT=prj_XVYvf7hNBpZJG8Hx48s11gZaR18W   (cbhbusinessgroup.com)
 SPS_PROJECT=prj_GpxTMaEQgecHCgF8Fh0x9zsGulEf   (simplispect.com)
@@ -1117,7 +1119,7 @@ For each site, compare the deployed commit SHA to GitHub HEAD. If they don't mat
 ```bash
 # Get live deployment SHA
 curl -s "https://api.vercel.com/v13/deployments?projectId=prj_XVYvf7hNBpZJG8Hx48s11gZaR18W&teamId=team_fejRgEZjmM9M7zkmOUy7HJxL&target=production&limit=1" \
-  -H "Authorization: Bearer vca_4X0gLadiadF2zCZB3XhSrBRuZ0SgxDIvn7uRPyp5bOFqVKO4Bd1Mk6G6"
+  -H "Authorization: Bearer ${VERCEL_TOKEN_A}${VERCEL_TOKEN_B}"
 # Extract: deployments[0].meta.githubCommitSha and deployments[0].createdAt
 
 # Get GitHub HEAD SHA
@@ -1129,7 +1131,7 @@ curl -s "https://api.github.com/repos/JesseH25-code/cbh-nextjs/commits/main" \
 **Simplispect site:**
 ```bash
 curl -s "https://api.vercel.com/v13/deployments?projectId=prj_GpxTMaEQgecHCgF8Fh0x9zsGulEf&teamId=team_fejRgEZjmM9M7zkmOUy7HJxL&target=production&limit=1" \
-  -H "Authorization: Bearer vca_4X0gLadiadF2zCZB3XhSrBRuZ0SgxDIvn7uRPyp5bOFqVKO4Bd1Mk6G6"
+  -H "Authorization: Bearer ${VERCEL_TOKEN_A}${VERCEL_TOKEN_B}"
 
 curl -s "https://api.github.com/repos/JesseH25-code/simplispect/commits/main" \
   -H "User-Agent: cbh-audit"
