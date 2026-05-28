@@ -308,11 +308,52 @@ After the script completes, use Outlook MCP tools to search jesse@cbhadvisory.co
 
 **Ignore completely:** newsletters, marketing, automated notifications, WordPress alerts, Skool digests, DealStream listings, TaxHive, GoDaddy, Stripe notifications, cold solicitations.
 
-**Categorize:**
-- **SUBSTANTIVE** — replies from sellers, buyers, active deal contacts, or known relationships. For each: sender name, subject, 1-line summary, draft reply (2-4 sentences, Jesse's voice, sign as Jesse Hastings / CBH Business Group)
-- **JUNK TO REVIEW** — cold spam Jesse should manually move. Sender + subject only.
+**For every substantive reply (seller, buyer, active deal, known relationship), classify it into one of three buckets and take action in GHL:**
 
-Send digest to jesse@cbhadvisory.com via Resend. Subject: `[Elijah] Inbox Digest — [date] [12pm/3pm]`. Send even if inbox is clear ("inbox clear" summary). Always send a [SENT] log copy.
+---
+
+**🔥 POSITIVE — Lead is interested, open to a call, asking questions, or engaging meaningfully**
+
+Actions (all required):
+1. Search GHL for the contact by email: `GET /contacts/?locationId=dmJ46ZDGVnMqpqJUs4ok&query={email}`
+2. If found — tag `prior-conversation` (stops Nathan sequence): `POST /contacts/{id}/tags` with `{"tags":["prior-conversation"]}`
+3. Move their opportunity to Hot stage (`7b349004-f7a0-42e9-a80e-aa1164a75f7c`) in CBH Lead Pipeline (`IQ0nxNPCi5XLesezBtXw`): `PUT /opportunities/{oppId}` with `{"pipelineStageId":"7b349004-f7a0-42e9-a80e-aa1164a75f7c"}`
+4. Create GHL task on the contact: `POST /contacts/{id}/tasks` with `{"title":"🔥 CALL — {Name} replied positively","body":"Reply received: {1-line summary of what they said}","dueDate":"{today}T23:59:00Z","completed":false}`
+5. Add note to contact: `POST /contacts/{id}/notes` with `{"body":"[Elijah POSITIVE] Reply received {date}: {summary of their message}"}`
+6. Send URGENT alert to jesse@cbhadvisory.com via Resend — subject: `🔥 ACTION REQUIRED — {Name} replied positively`, body: their name, company, email, what they said, draft reply suggestion
+
+---
+
+**⏳ FUTURE / NOT YET — Lead says timing isn't right, maybe later, not ready, follow up in X months**
+
+Actions (all required):
+1. Search GHL for the contact by email
+2. If found — move opportunity to Contacted stage (`602a2a0e-b3b4-4287-92fd-84a8410256c7`) in CBH Lead Pipeline. Do NOT tag `prior-conversation` — Nathan nurture continues.
+3. Add note to contact: `POST /contacts/{id}/notes` with `{"body":"[Elijah FUTURE] Reply received {date}: {summary — they said not yet/future}"}`
+4. Include in the regular digest with label ⏳ FUTURE
+
+---
+
+**❌ NOT INTERESTED / DNC — Lead is clearly not interested, asked to stop, or hostile**
+
+Actions (all required):
+1. Search GHL for the contact by email
+2. If found — tag `do-not-contact`: `POST /contacts/{id}/tags` with `{"tags":["do-not-contact"]}`
+3. Remove from all pipelines by marking opportunity as lost: `PUT /opportunities/{oppId}` with `{"status":"lost"}`
+4. Add note: `{"body":"[Elijah DNC] {date}: replied not interested — removed from all sequences"}`
+5. Include in digest with label ❌ DNC
+
+---
+
+**JUNK TO REVIEW** — cold spam Jesse should manually move. Sender + subject only, no action needed.
+
+---
+
+**Send one digest email** to jesse@cbhadvisory.com via Resend.
+Subject: `[Elijah] Inbox Digest — [date] [12pm/3pm]`
+Include all four buckets. Send even if inbox is clear. Always send a [SENT] log copy.
+
+For POSITIVE replies, also send the separate urgent alert email (step 6 above) — do not wait for the digest.
 
 ---
 
