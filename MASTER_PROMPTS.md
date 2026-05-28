@@ -1238,3 +1238,98 @@ Sent by CBH Infrastructure Audit · Daily 7:30 AM ET
 
 Send via Resend from jesse@cbhadvisory.com to jesse@cbhadvisory.com.
 *To update any agent: edit this file. All agents pull fresh on every run.*
+
+---
+
+## AGENT: Linkva Leads → GHL
+**Schedule:** Daily 8:00 AM ET
+**Purpose:** Read new LinkedIn leads from the Linkva Google Sheet and add them to GHL as contacts. Skip any lead already in GHL (check by email). Never duplicate.
+
+**IMPORTANT: Use these values directly.**
+```
+GHL_KEY=pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3
+GHL_LOC=dmJ46ZDGVnMqpqJUs4ok
+RESEND_KEY=re_MSsq8i5X_ExyDPD8VaKuXE4d66eASgdWp
+SHEET_ID=1dnKQcobm5t-lQD0tM23tWhSrW-tido7-tG6th9BGDvI
+CBH_COLD_STAGE=a36a1e04-c616-42c4-9832-00c2367404c7
+CBH_LEAD_PIPELINE=IQ0nxNPCi5XLesezBtXw
+```
+
+**STEP 1 — Read the Google Sheet**
+
+Use Google Drive MCP tool `read_file_content` with fileId `1dnKQcobm5t-lQD0tM23tWhSrW-tido7-tG6th9BGDvI` to get all leads.
+
+Columns (in order): First Name, Last Name, Title, Headline, Company, Phone Number, Email, Location, LinkedIn URL, From Campaign, Date Added, Lead Quality, Notes on Leads
+
+Skip any row missing an email address.
+
+**STEP 2 — Check GHL for duplicates**
+
+For each lead with an email, search GHL:
+```bash
+curl -s "https://services.leadconnectorhq.com/contacts/?locationId=dmJ46ZDGVnMqpqJUs4ok&query={EMAIL}" \
+  -H "Authorization: Bearer pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3" \
+  -H "Version: 2021-07-28"
+```
+If a contact with that email already exists → skip. Do NOT update existing contacts.
+
+**STEP 3 — Create new GHL contact**
+
+For each lead NOT already in GHL:
+```bash
+curl -s -X POST "https://services.leadconnectorhq.com/contacts/" \
+  -H "Authorization: Bearer pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3" \
+  -H "Version: 2021-07-28" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "locationId": "dmJ46ZDGVnMqpqJUs4ok",
+    "firstName": "FIRST",
+    "lastName": "LAST",
+    "email": "EMAIL",
+    "phone": "PHONE",
+    "companyName": "COMPANY",
+    "tags": ["linkva-lead", "prior-conversation"]
+  }'
+```
+
+**STEP 4 — Add opportunity to CBH Lead Pipeline (Cold stage)**
+
+After creating the contact, get the contactId from the response and create an opportunity:
+```bash
+curl -s -X POST "https://services.leadconnectorhq.com/opportunities/" \
+  -H "Authorization: Bearer pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3" \
+  -H "Version: 2021-07-28" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pipelineId": "IQ0nxNPCi5XLesezBtXw",
+    "pipelineStageId": "a36a1e04-c616-42c4-9832-00c2367404c7",
+    "locationId": "dmJ46ZDGVnMqpqJUs4ok",
+    "contactId": "CONTACT_ID",
+    "name": "FIRST LAST — COMPANY",
+    "status": "open"
+  }'
+```
+
+**STEP 5 — Add note to contact**
+
+Post a note with the LinkedIn and Linkva context:
+```bash
+curl -s -X POST "https://services.leadconnectorhq.com/contacts/{contactId}/notes" \
+  -H "Authorization: Bearer pit-ef474c71-b143-437a-ace0-ea7a45ab3cb3" \
+  -H "Version: 2021-07-28" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "body": "[Linkva LinkedIn Lead]\nLinkedIn: {LINKEDIN_URL}\nTitle: {TITLE}\nCampaign: {CAMPAIGN}\nDate Added: {DATE_ADDED}\nNotes: {NOTES_ON_LEADS}"
+  }'
+```
+
+**STEP 6 — Send summary email**
+
+Send one email to jesse@cbhadvisory.com via Resend:
+- Subject: `[Linkva] X new leads added to GHL — {date}`
+- Body: table of new contacts added (Name, Company, Email) + count of skipped (already existed)
+- If zero new leads: send brief "No new Linkva leads today" email
+
+Also send [SENT] log copy with same body, subject prefixed `[SENT]`.
+
+Wait 500ms between each GHL contact creation to avoid rate limits.
