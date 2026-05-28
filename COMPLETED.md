@@ -57,7 +57,7 @@ Before any outreach, reply, or task — check here first.
   - Video 1 — SDE vs EBITDA: https://www.loom.com/share/b104c312b3ae4446b4211862883dfb09 ✅
   - Video 2 — The Deal Timeline: https://www.loom.com/share/5460ad7709944018b8fbf2758bc14164 ✅
   - Source deck: CBH_Education_Deck.pptx (Desktop). Talking points: CBH_Talking_Points.md (Desktop).
-- [2026-05-18] CCR consolidation: Elijah consolidated to 2 runs (12pm + 6pm ET). Removed: CCR Elijah duplicates, CCR CBH SEO (local handles it), local CoS (CCR handles it), Jarvis, Daily Lead Generator ✅
+- [2026-05-18] CCR consolidation: Elijah consolidated to 2 runs (12pm + 3pm ET). Removed: CCR Elijah duplicates, CCR CBH SEO (local handles it), local CoS (CCR handles it), Jarvis, Daily Lead Generator ✅
 
 ---
 
